@@ -7,18 +7,13 @@ using System.Threading.Tasks;
 
 namespace SocialMedia.Models
 {
-    public class Comment
+    public class PostCreate
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
+        [MinLength(2, ErrorMessage = "Please enter at least 2 characters.")]
+        [MaxLength(200, ErrorMessage = "There are too many characters in this field.")]
+        public string Title { get; set; }
+        [MaxLength(8000)]
         public string Text { get; set; }
-
-        [Required]
-        public Guid Author { get; set; }
-
-        [Display(Name = "Created")]
-        public DateTimeOffset CreatedUtc { get; set; }
     }
 }
