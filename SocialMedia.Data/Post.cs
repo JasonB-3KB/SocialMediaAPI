@@ -9,7 +9,7 @@ namespace SocialMedia.Data
 {
     public class Post
     {
-        [Key]
+        [Key, Required]
         public int Id { get; set; }
 
         [Required]

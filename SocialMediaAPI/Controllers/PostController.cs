@@ -1,4 +1,5 @@
-﻿using SocialMedia.Models;
+﻿using Microsoft.AspNet.Identity;
+using SocialMedia.Models;
 using SocialMedia.Services;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace SocialMediaAPI.Controllers
     {
         private PostService CreatePostService()
         {
-            var postId = Guid.Parse(User.Identity.GetPostId());
+            var postId = Guid.Parse(User.Identity.GetUserId());
             var postService = new PostService(postId);
             return postService;
         }
@@ -22,10 +23,10 @@ namespace SocialMediaAPI.Controllers
         public IHttpActionResult Get()
         {
             PostService postService = CreatePostService();
-            var posts = postService.GetPosts();
+            var posts = postService.GetPost();
             return Ok(posts);
         }
-        public IHttpActionResult Post(PostCreate note)
+        public IHttpActionResult Post(PostCreate post)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
