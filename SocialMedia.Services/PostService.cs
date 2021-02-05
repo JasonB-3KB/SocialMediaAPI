@@ -1,4 +1,5 @@
 ﻿using SocialMedia.Data;
+using SocialMedia.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,8 +44,9 @@ namespace SocialMedia.Services
                         e =>
                         new PostItem
                         {
-                            PostId = e.PostId,
+                            PostId = e.Id,
                             Title = e.Title,
+                            Text = e.Text,
                             CreatedUtc = e.CreatedUtc
                         }
                         );
@@ -58,20 +60,20 @@ namespace SocialMedia.Services
             {
                 var entity =
                     ctx
-                    .Notes
-                    .Single(e => e.NoteId == id && e.OwnerId == _userId);
+                    .Posts
+                    .Single(e => e.Id == id && e.Author == _userId);
                 return
                     new PostDetail
                     {
-                        NoteId = entity.NoteId,
+                        PostId = entity.Id,
                         Title = entity.Title,
-                        Content = entity.Content,
+                        Text = entity.Text,
                         CreatedUtc = entity.CreatedUtc,
                         ModifiedUtc = entity.ModifiedUtc
                     };
             }
         }
-        public bool UpdatePost(NoteEdit model)
+        /*public bool UpdatePost(PostEdit model)
         {
             using (var ctx = new ApplicationDbContext())
             {
@@ -101,6 +103,6 @@ namespace SocialMedia.Services
 
                 return ctx.SaveChanges() == 1;
             }
-        }
+        }*/
     }
 }
