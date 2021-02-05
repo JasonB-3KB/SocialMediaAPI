@@ -9,7 +9,7 @@ namespace SocialMedia.Data
 {
     public class Post
     {
-        [Key, Required]
+        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -20,6 +20,8 @@ namespace SocialMedia.Data
 
         [Required]
         public string Text { get; set; }
+
+        public virtual List<Comment> Comments { get; set; } = new List<Comment>();
 
         [Required]
         [Display(Name = "Created")]
