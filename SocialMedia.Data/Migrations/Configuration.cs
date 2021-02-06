@@ -10,6 +10,7 @@ namespace SocialMedia.Data.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
+            ContextKey = "SocialMedia.Data.ApplicationDbContext";
         }
 
         protected override void Seed(SocialMedia.Data.ApplicationDbContext context)
