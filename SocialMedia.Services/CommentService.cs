@@ -18,11 +18,13 @@ namespace SocialMedia.Services
             }
             public bool CreateComment(CommentCreate model)
             {
-                var entity =
-                    new Comment()
-                    {
+            var entity =
+                new Comment()
+                {
                         Author = _userId,
+                        //Id = model.Id,
                         Text = model.Text,
+                        PostId = model.PostId,
                         CreatedUtc = DateTimeOffset.Now
                     };
 
