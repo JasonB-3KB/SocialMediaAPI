@@ -84,6 +84,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ReplyEdit.cs" />
+    <Compile Include="CommentEdit.cs" />
     <Compile Include="ReplyItem.cs" />
     <Compile Include="ReplyDetail.cs" />
     <Compile Include="ReplyCreate.cs" />

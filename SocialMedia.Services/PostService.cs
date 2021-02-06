@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace SocialMedia.Services
 {
@@ -54,6 +55,7 @@ namespace SocialMedia.Services
             }
 
         }
+        
         public PostDetail GetPostById(int id)
         {
             using (var ctx = new ApplicationDbContext())
@@ -65,7 +67,7 @@ namespace SocialMedia.Services
                 return
                     new PostDetail
                     {
-                        PostId = entity.Id,
+                        Id = entity.Id,
                         Title = entity.Title,
                         Text = entity.Text,
                         CreatedUtc = entity.CreatedUtc,
@@ -73,36 +75,36 @@ namespace SocialMedia.Services
                     };
             }
         }
-        /*public bool UpdatePost(PostEdit model)
+        public bool UpdatePost(PostEdit model)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
-                    .Notes
-                    .Single(e => e.NoteId == model.NoteId && e.OwnerId == _userId);
+                    .Posts
+                    .Single(e => e.Id == model.Id && e.Author == _userId);
 
                 entity.Title = model.Title;
-                entity.Content = model.Content;
+                entity.Text = model.Text;
                 entity.ModifiedUtc = DateTimeOffset.UtcNow;
 
                 return ctx.SaveChanges() == 1;
             }
         }
 
-        public bool DeleteNote(int noteId)
+        public bool DeletePost(int postId)
         {
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
                     ctx
-                    .Notes
-                    .Single(e => e.NoteId == noteId && e.OwnerId == _userId);
+                    .Posts
+                    .Single(e => e.Id == postId && e.Author == _userId);
 
-                ctx.Notes.Remove(entity);
+                ctx.Posts.Remove(entity);
 
                 return ctx.SaveChanges() == 1;
             }
-        }*/
+        }
     }
 }

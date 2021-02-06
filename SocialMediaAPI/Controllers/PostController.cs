@@ -38,12 +38,33 @@ namespace SocialMediaAPI.Controllers
 
             return Ok();
         }
-        public IHttpActionResult Get(int postId)
+        public IHttpActionResult Get(int Id)
         {
             PostService postService = CreatePostService();
-            var post = postService.GetPostById(postId);
+            var post = postService.GetPostById(Id);
             return Ok(post);
         }
+        public IHttpActionResult Put(PostEdit post)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
+            var service = CreatePostService();
+
+            if (!service.UpdatePost(post))
+                return InternalServerError();
+
+            return Ok();
+        }
+
+        public IHttpActionResult Delete(int id)
+        {
+            var service = CreatePostService();
+
+            if (!service.DeletePost(id))
+                return InternalServerError();
+
+            return Ok();
+        }
     }
 }
