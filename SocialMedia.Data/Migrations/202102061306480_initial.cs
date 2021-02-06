@@ -3,21 +3,37 @@ namespace SocialMedia.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.Post",
+                "dbo.Comment",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        PostId = c.Int(nullable: false),
+                        Author = c.Guid(nullable: false),
+                        Text = c.String(nullable: false),
+                        CreatedUtc = c.DateTimeOffset(nullable: false, precision: 7),
+                        ModifiedUtc = c.DateTimeOffset(precision: 7),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Post", t => t.PostId, cascadeDelete: true)
+                .Index(t => t.PostId);
+            
+            CreateTable(
+                "dbo.Post",
+                c => new
+                    {
+                        PostId = c.Int(nullable: false, identity: true),
+                        Author = c.Guid(nullable: false),
                         Title = c.String(nullable: false),
                         Text = c.String(nullable: false),
                         CreatedUtc = c.DateTimeOffset(nullable: false, precision: 7),
                         ModifiedUtc = c.DateTimeOffset(precision: 7),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.PostId);
             
             CreateTable(
                 "dbo.IdentityRole",
@@ -97,16 +113,19 @@ namespace SocialMedia.Data.Migrations
             DropForeignKey("dbo.IdentityUserLogin", "ApplicationUser_Id", "dbo.ApplicationUser");
             DropForeignKey("dbo.IdentityUserClaim", "ApplicationUser_Id", "dbo.ApplicationUser");
             DropForeignKey("dbo.IdentityUserRole", "IdentityRole_Id", "dbo.IdentityRole");
+            DropForeignKey("dbo.Comment", "PostId", "dbo.Post");
             DropIndex("dbo.IdentityUserLogin", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.IdentityUserClaim", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.IdentityUserRole", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.IdentityUserRole", new[] { "IdentityRole_Id" });
+            DropIndex("dbo.Comment", new[] { "PostId" });
             DropTable("dbo.IdentityUserLogin");
             DropTable("dbo.IdentityUserClaim");
             DropTable("dbo.ApplicationUser");
             DropTable("dbo.IdentityUserRole");
             DropTable("dbo.IdentityRole");
             DropTable("dbo.Post");
+            DropTable("dbo.Comment");
         }
     }
 }
