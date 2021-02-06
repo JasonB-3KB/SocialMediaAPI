@@ -73,37 +73,37 @@ namespace SocialMedia.Services
                         };
                 }
             }
-            /*public bool UpdatePost(PostEdit model)
+            public bool UpdateComment(CommentEdit model)
             {
                 using (var ctx = new ApplicationDbContext())
                 {
                     var entity =
                         ctx
-                        .Notes
-                        .Single(e => e.NoteId == model.NoteId && e.OwnerId == _userId);
+                        .Comments
+                        .Single(e => e.Id == model.Id && e.Author == _userId);
 
-                    entity.Title = model.Title;
-                    entity.Content = model.Content;
+                    //entity.Title = model.Title;
+                    entity.Text = model.Text;
                     entity.ModifiedUtc = DateTimeOffset.UtcNow;
 
                     return ctx.SaveChanges() == 1;
                 }
             }
 
-            public bool DeleteNote(int noteId)
+            public bool DeleteComment(int Id)
             {
                 using (var ctx = new ApplicationDbContext())
                 {
                     var entity =
                         ctx
-                        .Notes
-                        .Single(e => e.NoteId == noteId && e.OwnerId == _userId);
+                        .Comments
+                        .Single(e => e.Id == Id && e.Author == _userId);
 
-                    ctx.Notes.Remove(entity);
+                    ctx.Comments.Remove(entity);
 
                     return ctx.SaveChanges() == 1;
                 }
-            }*/
+            }
         }
     }
 
