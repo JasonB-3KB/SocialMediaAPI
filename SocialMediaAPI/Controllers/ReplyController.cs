@@ -13,7 +13,7 @@ namespace SocialMediaAPI.Controllers
     [Authorize]
     public class ReplyController : ApiController
     {
-        private ReplyService CreateReply()
+        private ReplyService CreateReplyService()
         {
             var Id = Guid.Parse(User.Identity.GetUserId());
             var replyService = new ReplyService(Id);
@@ -22,7 +22,7 @@ namespace SocialMediaAPI.Controllers
 
         public IHttpActionResult Get()
         {
-            ReplyService replyService = CreateReply();
+            ReplyService replyService = CreateReplyService();
             var replies = replyService.GetReply();
             return Ok(replies);
         }
@@ -31,7 +31,7 @@ namespace SocialMediaAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateReply();
+            var service = CreateReplyService();
 
             if (!service.CreateReply(reply))
                 return InternalServerError();
@@ -40,19 +40,19 @@ namespace SocialMediaAPI.Controllers
         }
         public IHttpActionResult Get(int id)
         {
-            ReplyService replyService = CreateReply();
+            ReplyService replyService = CreateReplyService();
             var reply = replyService.GetReplyById(id);
             return Ok(reply);
         }
 
-       /* public IHttpActionResult Put(CommentEdit comment)
+        public IHttpActionResult Put(ReplyEdit reply)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateCommentService();
+            var service = CreateReplyService();
 
-            if (!service.UpdateComment(comment))
+            if (!service.UpdateReply(reply))
                 return InternalServerError();
 
             return Ok();
@@ -60,13 +60,13 @@ namespace SocialMediaAPI.Controllers
 
         public IHttpActionResult Delete(int id)
         {
-            var service = CreateCommentService();
+            var service = CreateReplyService();
 
-            if (!service.DeleteComment(id))
+            if (!service.DeleteReply(id))
                 return InternalServerError();
 
             return Ok();
-        }*/
+        }
 
     }
 }
