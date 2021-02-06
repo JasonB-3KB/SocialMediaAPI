@@ -13,7 +13,7 @@ namespace SocialMediaAPI.Controllers
     [Authorize]
     public class CommentController : ApiController
     {
-        private CommentService CreateCommentService()
+        private CommentService CreateComment()
         {
             var Id = Guid.Parse(User.Identity.GetUserId());
             var commentService = new CommentService(Id);
@@ -22,7 +22,7 @@ namespace SocialMediaAPI.Controllers
 
         public IHttpActionResult Get()
         {
-            CommentService commentService = CreateCommentService();
+            CommentService commentService = CreateComment();
             var comments = commentService.GetComment();
             return Ok(comments);
         }
@@ -31,18 +31,18 @@ namespace SocialMediaAPI.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateCommentService();
+            var service = CreateComment();
 
             if (!service.CreateComment(comment))
                 return InternalServerError();
 
             return Ok();
         }
-        public IHttpActionResult Get(int Id)
+        public IHttpActionResult Get(int id)
         {
-            CommentService commentService = CreateCommentService();
-            var post = commentService.GetCommentById(Id);
-            return Ok(Id);
+            CommentService commentService = CreateComment();
+            var comments = commentService.GetCommentById(id);
+            return Ok(comments);
         }
 
        /* public IHttpActionResult Put(CommentEdit comment)

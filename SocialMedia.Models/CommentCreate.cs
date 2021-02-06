@@ -9,10 +9,13 @@ namespace SocialMedia.Models
 {
     public class CommentCreate
     {
-        [Required]
+
+        [Key]
         public int Id { get; set; }
         [Required]        
         [MaxLength(8000)]
         public string Text { get; set; }
+        [Required]
+        public int PostId { get; set; }
     }
 }
